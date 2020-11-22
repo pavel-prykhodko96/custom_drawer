@@ -29,21 +29,13 @@ class LinesBloc extends Bloc {
     _linesController.sink.add(_lines);
   }
 
-  void finishLineAt(Offset offset) {
-    // _currentLine.add(offset);
-    // _currentLine = [];
-    _linesController.sink.add(_lines);
-  }
-
   void setColor(Color color) {
     _currentLineBrush = _currentLineBrush.copyWith(color: color);
-    _currentLineBrush.color = color;
     _brushController.sink.add(_currentLineBrush);
   }
 
   void setWidth(double width) {
     _currentLineBrush = _currentLineBrush.copyWith(width: width);
-    _currentLineBrush.width = width;
     _brushController.sink.add(_currentLineBrush);
   }
 

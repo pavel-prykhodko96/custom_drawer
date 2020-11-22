@@ -30,26 +30,24 @@ class _PainterScreenState extends State<PainterScreen> {
       backgroundColor: Colors.grey,
       body: SizedBox.expand(
         child: UnconstrainedBox(
-          child: Container(
-            width: painterAreaSize.width,
-            height: painterAreaSize.height, // area is square
-            child: GestureDetector(
-              onPanStart: (details) =>
-                  linesBloc.newLineAt(details.localPosition),
-              onPanUpdate: (details) =>
-                  linesBloc.addPointAt(details.localPosition),
-              child: StreamBuilder<List<Line>>(
-                stream: linesBloc.linesStream,
-                builder: (context, snapshot) {
-                  return Container(
-                    color: Colors.white,
+          child: GestureDetector(
+            onPanStart: (details) => linesBloc.newLineAt(details.localPosition),
+            onPanUpdate: (details) =>
+                linesBloc.addPointAt(details.localPosition),
+            child: StreamBuilder<List<Line>>(
+              stream: linesBloc.linesStream,
+              builder: (context, snapshot) {
+                return Container(
+                  color: Colors.white,
+                  child: ClipRect(
+                    // To not draw outside square
                     child: CustomPaint(
                       size: painterAreaSize,
-                      painter: Painter(snapshot.data),
+                      painter: snapshot.hasData ? Painter(snapshot.data) : null,
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           ),
         ),
