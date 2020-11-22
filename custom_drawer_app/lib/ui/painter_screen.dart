@@ -39,9 +39,12 @@ class _PainterScreenState extends State<PainterScreen> {
               builder: (context, snapshot) {
                 return Container(
                   color: Colors.white,
-                  child: CustomPaint(
-                    size: painterAreaSize,
-                    painter: snapshot.hasData ? Painter(snapshot.data) : null,
+                  child: ClipRect(
+                    // To not draw outside square
+                    child: CustomPaint(
+                      size: painterAreaSize,
+                      painter: snapshot.hasData ? Painter(snapshot.data) : null,
+                    ),
                   ),
                 );
               },
