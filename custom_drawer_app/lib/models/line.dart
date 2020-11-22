@@ -5,5 +5,5 @@ class Line {
   final Brush brush;
   List<Offset> offsets = [];
 
-  Line(this.brush);
+  Line({@required this.brush});
 }

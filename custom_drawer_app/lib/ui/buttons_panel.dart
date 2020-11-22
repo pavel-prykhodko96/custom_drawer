@@ -1,5 +1,6 @@
 import 'package:custom_drawer_app/bloc/general/bloc_provider.dart';
 import 'package:custom_drawer_app/bloc/lines_bloc.dart';
+import 'package:custom_drawer_app/models/line.dart';
 import 'package:flutter/material.dart';
 
 class ButtonsPanel extends StatelessWidget {
@@ -16,15 +17,31 @@ class ButtonsPanel extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: IconButton(
-              icon: Icon(Icons.undo),
-              onPressed: null,
+            child: StreamBuilder<List<Line>>(
+              stream: linesBloc.linesStream,
+              builder: (context, snapshot) {
+                final bool enableButton =
+                    snapshot.hasData && snapshot.data.isNotEmpty;
+
+                return IconButton(
+                  icon: Icon(Icons.undo),
+                  onPressed: enableButton ? linesBloc.undo : null,
+                );
+              },
             ),
           ),
           Expanded(
-            child: IconButton(
-              icon: Icon(Icons.redo),
-              onPressed: null,
+            child: StreamBuilder<List<Line>>(
+              stream: linesBloc.undidLinesStream,
+              builder: (context, snapshot) {
+                final bool enableButton =
+                    snapshot.hasData && snapshot.data.isNotEmpty;
+
+                return IconButton(
+                  icon: Icon(Icons.redo),
+                  onPressed: enableButton ? linesBloc.redo : null,
+                );
+              },
             ),
           ),
           Expanded(
