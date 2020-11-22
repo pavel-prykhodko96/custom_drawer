@@ -1,4 +1,6 @@
-import 'package:custom_drawer_app/painter_screen.dart';
+import 'package:custom_drawer_app/bloc/general/bloc_provider.dart';
+import 'package:custom_drawer_app/bloc/lines_bloc.dart';
+import 'package:custom_drawer_app/ui/painter_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -6,18 +8,20 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        backgroundColor: Colors.white,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return BlocProvider(
+      bloc: LinesBloc(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          backgroundColor: Colors.white,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: PainterScreen(),
       ),
-      home: PainterScreen(),
     );
   }
 }
