@@ -1,33 +1,34 @@
-import 'package:custom_drawer_app/models/brush.dart';
+import 'package:custom_drawer_app/models/line.dart';
 import 'package:flutter/material.dart';
 
 class Painter extends CustomPainter {
-  final List<List<Offset>> _lines;
-  final Brush _brush;
+  final List<Line> _lines;
 
-  Painter(List<List<Offset>> lines, Brush brush)
-      : _lines = lines,
-        _brush = brush;
+  Painter(List<Line> lines) : _lines = lines;
 
   @override
   void paint(Canvas canvas, Size size) {
+    if (_lines == null) return;
     for (var line in _lines) {
-      if (line.length == 1) {
+      final offsets = line.offsets;
+      final brush = line.brush;
+
+      if (offsets.length == 1) {
         canvas.drawLine(
-          line[0],
-          line[0],
+          offsets[0],
+          offsets[0],
           Paint()
-            ..color = _brush.color
-            ..strokeWidth = _brush.width,
+            ..color = brush.color
+            ..strokeWidth = brush.width,
         );
       } else {
-        for (var i = 0; i < line.length - 1; ++i) {
+        for (var i = 0; i < offsets.length - 1; ++i) {
           canvas.drawLine(
-            line[i],
-            line[i + 1],
+            offsets[i],
+            offsets[i + 1],
             Paint()
-              ..color = _brush.color
-              ..strokeWidth = _brush.width,
+              ..color = brush.color
+              ..strokeWidth = brush.width,
           );
         }
       }

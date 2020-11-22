@@ -1,8 +1,6 @@
-import 'package:custom_drawer_app/bloc/brush_bloc.dart';
 import 'package:custom_drawer_app/bloc/general/bloc_provider.dart';
-import 'package:custom_drawer_app/bloc/general/main_bloc.dart';
 import 'package:custom_drawer_app/bloc/lines_bloc.dart';
-import 'package:custom_drawer_app/models/brush.dart';
+import 'package:custom_drawer_app/models/line.dart';
 import 'package:custom_drawer_app/ui/buttons_panel.dart';
 import 'package:custom_drawer_app/painter/painter.dart';
 import 'package:flutter/material.dart';
@@ -25,9 +23,7 @@ class _PainterScreenState extends State<PainterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    MainBloc mainBloc = BlocProvider.of<MainBloc>(context);
-    LinesBloc linesBloc = mainBloc.linesBloc;
-    BrushBloc brushBloc = mainBloc.brushBloc;
+    LinesBloc linesBloc = BlocProvider.of<LinesBloc>(context);
 
     return Scaffold(
       extendBody: true,
@@ -42,27 +38,15 @@ class _PainterScreenState extends State<PainterScreen> {
                   linesBloc.newLineAt(details.localPosition),
               onPanUpdate: (details) =>
                   linesBloc.addPointAt(details.localPosition),
-              child: StreamBuilder<List<List<Offset>>>(
+              child: StreamBuilder<List<Line>>(
                 stream: linesBloc.linesStream,
-                builder: (context, linesSnapshot) {
-                  return StreamBuilder<Brush>(
-                    stream: brushBloc.brushStream,
-                    builder: (context, brushSnapshot) {
-                      if (!brushSnapshot.hasData)
-                        brushBloc.setColor(Colors.black);
-                      return brushSnapshot.hasData
-                          ? Container(
-                              color: Colors.white,
-                              child: CustomPaint(
-                                size: painterAreaSize,
-                                painter: Painter(
-                                  linesSnapshot.data,
-                                  brushSnapshot.data,
-                                ),
-                              ),
-                            )
-                          : Container();
-                    },
+                builder: (context, snapshot) {
+                  return Container(
+                    color: Colors.white,
+                    child: CustomPaint(
+                      size: painterAreaSize,
+                      painter: Painter(snapshot.data),
+                    ),
                   );
                 },
               ),
