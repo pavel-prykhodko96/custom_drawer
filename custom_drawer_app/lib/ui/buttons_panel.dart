@@ -24,6 +24,21 @@ class ButtonsPanel extends StatelessWidget {
                     snapshot.hasData && snapshot.data.isNotEmpty;
 
                 return IconButton(
+                  icon: Icon(Icons.delete_outline),
+                  onPressed: // enableButton ? linesBloc.clear :
+                      null,
+                );
+              },
+            ),
+          ),
+          Expanded(
+            child: StreamBuilder<List<Line>>(
+              stream: linesBloc.linesStream,
+              builder: (context, snapshot) {
+                final bool enableButton =
+                    snapshot.hasData && snapshot.data.isNotEmpty;
+
+                return IconButton(
                   icon: Icon(Icons.undo),
                   onPressed: enableButton ? linesBloc.undo : null,
                 );
@@ -48,6 +63,12 @@ class ButtonsPanel extends StatelessWidget {
             child: IconButton(
               icon: Icon(Icons.share),
               onPressed: null,
+            ),
+          ),
+          Expanded(
+            child: IconButton(
+              icon: Icon(Icons.select_all),
+              onPressed: () {},
             ),
           ),
           Expanded(
