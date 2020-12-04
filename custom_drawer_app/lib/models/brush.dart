@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Brush {
-  Color color;
-  double width;
+  final Color color;
+  final double width;
 
   Brush({@required this.color, @required this.width});
 
-  Brush.defaultParameters() {
-    color = Colors.black;
-    width = 3;
-  }
+  Brush.defaultParameters()
+      : color = Colors.black,
+        width = 3;
 
   Brush copyWith({
     Color color,
