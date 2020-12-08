@@ -1,5 +1,5 @@
 import 'package:custom_drawer_app/bloc/general/bloc_provider.dart';
-import 'package:custom_drawer_app/bloc/lines_bloc.dart';
+import 'package:custom_drawer_app/bloc/items_bloc.dart';
 import 'package:custom_drawer_app/ui/painter_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      bloc: LinesBloc(),
+      bloc: ItemsBloc(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

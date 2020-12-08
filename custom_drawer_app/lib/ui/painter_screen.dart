@@ -1,6 +1,6 @@
 import 'package:custom_drawer_app/bloc/general/bloc_provider.dart';
-import 'package:custom_drawer_app/bloc/lines_bloc.dart';
-import 'package:custom_drawer_app/models/line.dart';
+import 'package:custom_drawer_app/bloc/items_bloc.dart';
+import 'package:custom_drawer_app/models/paint_items/paint_item.dart';
 import 'package:custom_drawer_app/ui/buttons_panel.dart';
 import 'package:custom_drawer_app/painter/painter.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +23,7 @@ class _PainterScreenState extends State<PainterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    LinesBloc linesBloc = BlocProvider.of<LinesBloc>(context);
+    ItemsBloc itemsBloc = BlocProvider.of<ItemsBloc>(context);
 
     return Scaffold(
       extendBody: true,
@@ -31,16 +31,15 @@ class _PainterScreenState extends State<PainterScreen> {
       body: SizedBox.expand(
         child: UnconstrainedBox(
           child: GestureDetector(
-            onPanStart: (details) => linesBloc.newLineAt(details.localPosition),
-            onPanUpdate: (details) =>
-                linesBloc.addPointAt(details.localPosition),
-            child: StreamBuilder<List<Line>>(
-              stream: linesBloc.linesStream,
+            // onPanStart: (details) => itemsBloc.newLineAt(details.localPosition),
+            // onPanUpdate: (details) => itemsBloc.addPointAt(details.localPosition),
+            child: StreamBuilder<List<PaintItem>>(
+              stream: itemsBloc.linesStream,
               builder: (context, snapshot) {
                 return Container(
                   color: Colors.white,
                   child: ClipRect(
-                    // To not draw outside square
+                    // ClipRect is for not drawing outside square
                     child: CustomPaint(
                       size: painterAreaSize,
                       painter: snapshot.hasData ? Painter(snapshot.data) : null,
